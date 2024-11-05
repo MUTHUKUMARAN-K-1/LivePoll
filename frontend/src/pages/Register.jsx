@@ -2,7 +2,7 @@ import React from "react";
 
 function Register() {
   return (
-    <div className=" flex justify-center p-4">
+    <div className=" flex justify-center h-screen bg-base-200 p-4">
       <div className="w-full max-w-md  rounded-lg ">
         <h2 className="text-2xl font-semibold text-center text-white mb-6">
           Sign Up

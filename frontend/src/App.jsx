@@ -6,6 +6,7 @@ import Header from "./components/Header/Header";
 import LoginPage from "./pages/LoginPage";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import Bookmark from "./pages/Bookmark";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<LoginPage/>} />
         <Route path="/register" element={<Register/>} />
         <Route path="dashboard" element={<Dashboard/>} />
+        <Route path="bookmark" element={<Bookmark/>} />
       </Routes>
     </BrowserRouter>
   );

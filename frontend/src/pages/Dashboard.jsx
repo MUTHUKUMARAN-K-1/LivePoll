@@ -13,7 +13,7 @@ function Dashboard() {
   ];
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-base-200">
       {showPollAddForm && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
           {/* Poll Add Form Component would go here */}
@@ -21,7 +21,7 @@ function Dashboard() {
       )}
 
       {/* User Profile Sidebar */}
-      <aside className="w-full lg:w-1/4 bg-slate-800 rounded-md mx-4 bg-opacity-50 shadow-lg p-4 flex flex-col items-center">
+      <aside className="w-full lg:w-1/4 bg-slate-800 rounded-md m-4 bg-opacity-50 shadow-lg p-4 flex flex-col items-center">
         <img
           src="https://via.placeholder.com/150" // Replace with actual path
           alt="User Profile"
