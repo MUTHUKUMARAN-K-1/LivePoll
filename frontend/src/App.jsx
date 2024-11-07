@@ -21,7 +21,7 @@ function App() {
         <Route path="dashboard" element={<Dashboard/>} />
         <Route path="bookmark" element={<Bookmark/>} />
         <Route path="/voting/:pollId" element={<VotingPage />} />
-        <Route path="/create" element={<CreatePollForm />} />
+        <Route path="/create" element={<CreatePollForm />} /> 
       </Routes>
     </BrowserRouter>
   );
