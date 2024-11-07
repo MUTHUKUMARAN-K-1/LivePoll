@@ -1,5 +1,6 @@
 // LoginPage.js
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
   return (
@@ -56,7 +57,7 @@ const LoginPage = () => {
         {/* Sign Up Link */}
         <p className="text-center text-gray-300">
           Don’t have an account?{' '}
-          <a href="#" className="text-primary hover:underline">Sign up</a>
+          <Link to="/register" href="#" className="text-primary hover:underline">Sign up</Link>
         </p>
       </div>
     </div>
