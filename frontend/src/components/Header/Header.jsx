@@ -6,7 +6,7 @@ function Header() {
   return (
     <div className="navbar bg-base-100">
   <div className="flex-1">
-    <Link to={"/"}><a className="btn btn-ghost text-xl">LivePoll</a></Link>
+  <Link to={"/"} className="btn btn-ghost text-xl">LivePoll</Link>
   </div>
   <div className="flex-none">
     <ul className="menu menu-horizontal px-1">
@@ -27,10 +27,10 @@ function Header() {
         tabIndex={0}
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
         <li>
-          <Link to={'/dashboard'}><a className="justify-between" >
+          <Link to={'/dashboard'} className="justify-between" >
             Profile
             <span className="badge">New</span>
-          </a></Link>
+          </Link>
         </li>
         <li><a>Logout</a></li>
       </ul>
