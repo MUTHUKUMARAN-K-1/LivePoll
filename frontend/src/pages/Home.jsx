@@ -3,7 +3,7 @@ import React from 'react'
 function Home() {
   return (
     <div className="flex bg-base-200 min-h-screen flex-col items-center text-white p-8">
-      <h1 className="text-4xl md:text-5xl font-bold mb-6">Welcome to <span className='bg-slate-800 px-4 rounded-md relative'>LivePoll</span></h1>
+      <h1 className="text-4xl mt-2 md:text-5xl font-bold mb-6 text-center flex flex-col gap-2 md:block">Welcome to <span className='bg-slate-800 px-4 rounded-md relative'>LivePoll</span></h1>
       <p className="text-lg text-center max-w-2xl mb-8">
         LivePoll is your platform for real-time, interactive polling. Create polls, participate in
         active discussions, and get instant feedback with live updates and visualizations. Discover

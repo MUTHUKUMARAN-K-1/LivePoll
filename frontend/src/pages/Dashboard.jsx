@@ -21,7 +21,7 @@ function Dashboard() {
       )}
 
       {/* User Profile Sidebar */}
-      <aside className="w-full lg:w-1/4 bg-slate-800 rounded-md m-4 bg-opacity-50 shadow-lg p-4 flex flex-col items-center">
+      <aside className="w-min lg:w-1/4 bg-slate-800 rounded-md m-4 bg-opacity-50 shadow-lg p-4 flex flex-col items-center">
         <img
           src="https://via.placeholder.com/150" // Replace with actual path
           alt="User Profile"
@@ -37,8 +37,8 @@ function Dashboard() {
       <main className="w-full lg:w-3/4 p-6">
         {/* Dashboard Header */}
         <div className="mb-6">
-          <h1 className="text-4xl font-bold text-white">Poll Dashboard</h1>
-          <p className="text-lg text-gray-300">Manage your polls, view results, and edit as needed.</p>
+          <h1 className="text-2xl md:text-4xl font-bold text-white">Poll Dashboard</h1>
+          <p className="md:text-lg text-gray-300">Manage your polls, view results, and edit as needed.</p>
         </div>
 
         {/* Add New Poll Button */}

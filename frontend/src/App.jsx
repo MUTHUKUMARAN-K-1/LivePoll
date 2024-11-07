@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Bookmark from "./pages/Bookmark";
 import VotingPage from "./pages/VotingPage";
+import CreatePollForm from "./pages/CreatePollForm";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="dashboard" element={<Dashboard/>} />
         <Route path="bookmark" element={<Bookmark/>} />
         <Route path="/voting/:pollId" element={<VotingPage />} />
+        <Route path="/create" element={<CreatePollForm />} />
       </Routes>
     </BrowserRouter>
   );

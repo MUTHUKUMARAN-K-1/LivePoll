@@ -35,7 +35,7 @@ function PollTableRow({ poll, index }) {
           )}
         </td>
         <td>
-          <div className="flex gap-2">
+          <div className="flex md:flex-row flex-col gap-2 flex-nowrap">
             <button onClick={() => setShowEditForm(true)} className="btn btn-sm btn-info flex items-center">
               <FaUserEdit className="mr-1" /> Edit
             </button>
