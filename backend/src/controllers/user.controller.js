@@ -53,3 +53,34 @@ export async function signinController(req, res) {
     }
   }
 }
+
+export const checkUser = async (req, res) => {
+  try{
+      res.json({
+          success : true,
+          message : "Found",
+          data : req.user
+      })
+  }
+  catch(err){
+      res.status(500).json({
+          success : false,
+          message : err.message
+      })
+  }
+}
+
+export async function logOutController(req, res) {
+  try{
+    res.clearCookie("livepoll-access-token").status(200).json({
+      success : true,
+      message : "User logged out successfully."
+    })
+  }
+  catch(err){
+    res.status(500).json({
+      success : false,
+      message : err.message
+    })
+  }
+}

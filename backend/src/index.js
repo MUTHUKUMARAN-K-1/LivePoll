@@ -8,6 +8,7 @@ import userRouter from './routes/v1/user.route.js';
 import swaggerDocs from '../swagger.js';
 import swaggerUi from 'swagger-ui-express';
 import cookieParser from "cookie-parser";
+import pollRouter from './routes/v1/poll.route.js';
 
 
 const app = express();
@@ -27,6 +28,8 @@ app.use(express.json())
 app.get("/ping", (_req, res) => {
     res.json({ message: "pong" })
 })
+
+app.use("/api/v1/poll", pollRouter);
 app.use("/api/v1/user", userRouter);
 
 await connectDB();

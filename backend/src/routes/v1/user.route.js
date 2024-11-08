@@ -1,5 +1,5 @@
 import express from "express";
-import { signinController, signupController } from "../../controllers/user.controller.js";
+import { checkUser, logOutController, signinController, signupController } from "../../controllers/user.controller.js";
 import validate from "../../validations/validator.js";
 import signupSchema from "../../validations/signupValidation.js";
 import signinSchema from "../../validations/signinValidation.js";
@@ -81,20 +81,18 @@ userRouter.post("/signup", validate(signupSchema), signupController);
  */
 userRouter.post("/signin", validate(signinSchema), signinController);
 
-userRouter.get("/user", verifyToken, (req, res) => {
-    try{
-        res.json({
-            success : true,
-            message : "Found",
-            data : req.user
-        })
-    }
-    catch(err){
-        res.status(500).json({
-            success : false,
-            message : err.message
-        })
-    }
-})
+userRouter.get("/logout", logOutController);
+
+/**
+ * @swagger
+ * /check:
+ *   get:
+ *     summary: Get user details
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+userRouter.get("/check", verifyToken, checkUser);
 
 export default userRouter;
