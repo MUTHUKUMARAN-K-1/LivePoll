@@ -24,3 +24,13 @@ export async function findUserByEmail(email) {
         throw err;
     }
 }
+
+export async function findUserById(id) {
+    try{
+        const user = await UserModel.findById(id);
+        return user;
+    }
+    catch(err){
+        throw err;
+    }
+}

@@ -29,7 +29,7 @@ export async function signinController(req, res) {
   try {
     const { email, password } = req.body;
     const { token, userData } = await signinService(email, password);
-    res.cookie("access-token", token, {
+    res.cookie("livepoll-access-token", token, {
       httpOnly: true,
       maxAge: 10 * 24 * 60 * 60 * 1000, // 10 days
     }).status(200).json({
