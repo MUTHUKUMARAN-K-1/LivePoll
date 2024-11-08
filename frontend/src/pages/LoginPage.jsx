@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { loginService } from '../services/loginService';
 import SpinnerLoader from '../components/Loaders/SpinnerLoader';
 import InlineTextError from '../components/Errors/InlineTextError';
+import useUserStore from '../store/useStore';
 
 const LoginPage = () => {
 
@@ -12,8 +13,11 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const navigator = useNavigate();
 
+  let {setUser} = useUserStore()
+
   const mutation = useMutation(loginService, {
     onSuccess: (data) => {
+      setUser(data?.user);
       setEmail('');
       setPassword('');
       navigator('/');

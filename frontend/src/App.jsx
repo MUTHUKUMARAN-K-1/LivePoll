@@ -10,25 +10,27 @@ import Bookmark from "./pages/Bookmark";
 import VotingPage from "./pages/VotingPage";
 import CreatePollForm from "./pages/CreatePollForm";
 import { QueryClient, QueryClientProvider } from "react-query";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 function App() {
-
   const queryClient = new QueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="bookmark" element={<Bookmark />} />
-        <Route path="/voting/:pollId" element={<VotingPage />} />
-        <Route path="/create" element={<CreatePollForm />} />
-      </Routes>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<Register />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="bookmark" element={<Bookmark />} />
+            <Route path="/voting/:pollId" element={<VotingPage />} />
+            <Route path="/create" element={<CreatePollForm />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </QueryClientProvider>
   );
 }

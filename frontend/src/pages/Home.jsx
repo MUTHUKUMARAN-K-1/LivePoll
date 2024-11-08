@@ -1,9 +1,11 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import useStore from '../store/useStore';
 
 function Home() {
 
   const navigator = useNavigate();
+
 
   return (
     <div className="flex bg-base-200 min-h-screen flex-col items-center text-white p-8">
