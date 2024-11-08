@@ -2,10 +2,12 @@
 import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import PollTableRow from "../components/PollTableRow/PollTableRow";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
-  const [showPollAddForm, setShowPollAddForm] = useState(false);
   
+  const navigator = useNavigate();
+
   const pollData = [
     { _id: "1", title: "Poll 1", description: "Description of Poll 1", totalVotes: 120, published: true },
     { _id: "2", title: "Poll 2", description: "Description of Poll 2", totalVotes: 45, published: false },
@@ -14,12 +16,6 @@ function Dashboard() {
 
   return (
     <div className="flex flex-col lg:flex-row min-h-screen bg-base-200">
-      {showPollAddForm && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
-          {/* Poll Add Form Component would go here */}
-        </div>
-      )}
-
       {/* User Profile Sidebar */}
       <aside className="w-min lg:w-1/4 bg-slate-800 rounded-md m-4 bg-opacity-50 shadow-lg p-4 flex flex-col items-center">
         <img
@@ -43,7 +39,7 @@ function Dashboard() {
 
         {/* Add New Poll Button */}
         <div className="flex justify-end mb-4">
-          <button className="btn btn-primary" onClick={() => setShowPollAddForm(!showPollAddForm)}>
+          <button className="btn btn-primary" onClick={() => navigator("/create")}>
             Add New Poll <FaPlus />
           </button>
         </div>
