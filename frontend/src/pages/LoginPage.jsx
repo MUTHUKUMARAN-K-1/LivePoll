@@ -1,8 +1,37 @@
 // LoginPage.js
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useMutation } from 'react-query';
+import { Link, useNavigate } from 'react-router-dom';
+import { loginService } from '../services/loginService';
+import SpinnerLoader from '../components/Loaders/SpinnerLoader';
+import InlineTextError from '../components/Errors/InlineTextError';
 
 const LoginPage = () => {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigator = useNavigate();
+
+  const mutation = useMutation(loginService, {
+    onSuccess: (data) => {
+      setEmail('');
+      setPassword('');
+      navigator('/');
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!email.trim() || !password.trim()) {
+      return;
+    }
+    mutation.mutate({ email, password });
+  }
+
   return (
     <div className="flex justify-center bg-base-200 h-screen  p-4">
       <div className="w-full max-w-md  rounded-lg  p-8">
@@ -16,6 +45,8 @@ const LoginPage = () => {
             </label>
             <input 
               type="email" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email" 
               className="input input-bordered w-full bg-gray-700 text-white focus:outline-none focus:ring focus:ring-primary" 
               required 
@@ -28,25 +59,40 @@ const LoginPage = () => {
               <span className="label-text text-gray-200">Password</span>
             </label>
             <input 
-              type="password" 
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)} 
               placeholder="Enter your password" 
               className="input input-bordered w-full bg-gray-700 text-white focus:outline-none focus:ring focus:ring-primary" 
               required 
             />
           </div>
 
+           {/* Error Message */}
+           {mutation.isError && <InlineTextError mutation={mutation} />}
+
+          {/* Success Message */}
+          {mutation.isSuccess && (
+            <p className="text-green-500 text-sm md:text-base">
+              🎉 {mutation.data.message || "Login is successfull"}
+            </p>
+          )}
+
           {/* Forgot Password Link */}
           <div className="text-right">
             <a href="#" className="text-sm text-primary hover:underline">Forgot password?</a>
           </div>
 
+         
+
           {/* Submit Button */}
           <div>
             <button 
+              onClick={handleLogin}
               type="submit" 
               className="btn btn-primary w-full text-white"
             >
-              Login
+              {mutation.isLoading ? <SpinnerLoader/> : "Login"}
             </button>
           </div>
         </form>
