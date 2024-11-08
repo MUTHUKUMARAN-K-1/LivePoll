@@ -11,6 +11,8 @@ import VotingPage from "./pages/VotingPage";
 import CreatePollForm from "./pages/CreatePollForm";
 import { QueryClient, QueryClientProvider } from "react-query";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const queryClient = new QueryClient();
@@ -30,6 +32,19 @@ function App() {
             <Route path="/create" element={<CreatePollForm />} />
           </Route>
         </Routes>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+          transition:Bounce
+        />
       </BrowserRouter>
     </QueryClientProvider>
   );

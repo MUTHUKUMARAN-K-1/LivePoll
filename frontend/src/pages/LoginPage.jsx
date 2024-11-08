@@ -6,6 +6,7 @@ import { loginService } from '../services/loginService';
 import SpinnerLoader from '../components/Loaders/SpinnerLoader';
 import InlineTextError from '../components/Errors/InlineTextError';
 import useUserStore from '../store/useStore';
+import { toast } from 'react-toastify';
 
 const LoginPage = () => {
 
@@ -18,6 +19,7 @@ const LoginPage = () => {
   const mutation = useMutation(loginService, {
     onSuccess: (data) => {
       setUser(data?.user);
+      toast.success(data?.message);
       setEmail('');
       setPassword('');
       navigator('/');
