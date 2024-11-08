@@ -1,7 +1,8 @@
 import express from "express";
-import { signupController } from "../../controllers/user.controller.js";
+import { signinController, signupController } from "../../controllers/user.controller.js";
 import validate from "../../validations/validator.js";
 import signupSchema from "../../validations/signupValidation.js";
+import signinSchema from "../../validations/signinValidation.js";
 const userRouter = express.Router();
 
 /**
@@ -38,5 +39,7 @@ userRouter.get("/test", (req, res) => {
  *         description: Success
  */
 userRouter.post("/signup", validate(signupSchema), signupController);
+
+userRouter.post("/signin", validate(signinSchema), signinController);
 
 export default userRouter;

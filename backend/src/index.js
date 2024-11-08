@@ -7,6 +7,7 @@ import { connectDB } from './config/dbConfig.js';
 import userRouter from './routes/v1/user.route.js';
 import swaggerDocs from '../swagger.js';
 import swaggerUi from 'swagger-ui-express';
+import cookieParser from "cookie-parser";
 
 
 const app = express();
@@ -20,6 +21,7 @@ const io = new Server(httpServer, {
     }
 })
 
+app.use(cookieParser());
 app.use(cors())
 app.use(express.json())
 app.get("/ping", (_req, res) => {

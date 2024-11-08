@@ -14,3 +14,13 @@ export const createUser = async (username, email, password) => {
         throw err
     }
 }
+
+export async function findUserByEmail(email) {
+    try{
+        const user = await UserModel.findOne({email});
+        return user;
+    }
+    catch(err){
+        throw err;
+    }
+}
