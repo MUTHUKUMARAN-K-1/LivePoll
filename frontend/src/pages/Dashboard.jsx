@@ -3,10 +3,13 @@ import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import PollTableRow from "../components/PollTableRow/PollTableRow";
 import { useNavigate } from "react-router-dom";
+import useUserStore from "../store/useStore";
+import useLogout from "../hooks/useLogout";
 
 function Dashboard() {
   
   const navigator = useNavigate();
+  const {handleLogout} = useLogout();
 
   const pollData = [
     { _id: "1", title: "Poll 1", description: "Description of Poll 1", totalVotes: 120, published: true },
@@ -14,19 +17,21 @@ function Dashboard() {
     // Add more poll data as needed
   ];
 
+  const {user} = useUserStore();
+
   return (
     <div className="flex flex-col lg:flex-row min-h-screen bg-base-200">
       {/* User Profile Sidebar */}
       <aside className="w-min lg:w-1/4 bg-slate-800 rounded-md m-4 bg-opacity-50 shadow-lg p-4 flex flex-col items-center">
         <img
-          src="https://via.placeholder.com/150" // Replace with actual path
+          src={`https://placehold.co/200x200?text=${user?.username[0] || "LivePoll"}`} // Replace with actual path
           alt="User Profile"
           className="rounded-full h-24 w-24 object-cover mb-4"
         />
-        <h2 className="text-2xl font-bold text-center text-white">@manikmaity</h2>
-        <p className="mt-2 text-center text-gray-400">manikmaity156@gmail.com</p>
+        <h2 className="text-2xl font-bold text-center text-white">{user?.username || "User"}</h2>
+        <p className="mt-2 text-center text-gray-400">{user?.email || "Email"}</p>
         <button className="btn btn-primary mt-4 w-full">Edit Profile</button>
-        <button className="btn btn-error btn-outline mt-4 w-full">Logout</button>
+        <button className="btn btn-error btn-outline mt-4 w-full" onClick={handleLogout}>Logout</button>
       </aside>
 
       {/* Dashboard Main Content */}
