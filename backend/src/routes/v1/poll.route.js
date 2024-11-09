@@ -1,6 +1,6 @@
 import express from "express";
 import { verifyToken } from "../../middlwares/verifyToken.js";
-import { createPollController, getAllCreatedPollsController, getPollDataController } from "../../controllers/poll.controller.js";
+import { createPollController, deletePollController, getAllCreatedPollsController, getPollDataController } from "../../controllers/poll.controller.js";
 import pollDataSchema from "../../validations/pollDataValidation.js";
 import validator from "../../validations/validator.js";
 const pollRouter = express.Router();
@@ -98,5 +98,7 @@ pollRouter.get("/data/:pollId", verifyToken, getPollDataController);
  *         description: Internal server error
  */
 pollRouter.get("/created", verifyToken, getAllCreatedPollsController);
+
+pollRouter.delete("/delete/:pollId", verifyToken, deletePollController);
 
 export default pollRouter;

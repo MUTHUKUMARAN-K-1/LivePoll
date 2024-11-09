@@ -29,3 +29,13 @@ export async function findPollsByCreatorId(id) {
         throw err;
     }
 }
+
+export async function deletePollById(id) {
+    try {
+        const poll = await PollModel.findByIdAndDelete(id);
+        return poll;
+    }
+    catch(err){
+        throw err;
+    }
+}

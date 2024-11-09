@@ -49,3 +49,29 @@ export async function getAllCreatedPollsService(id) {
         throw err;
     }
 }
+
+export async function deletePollService(pollId, user) {
+    try {
+        const userId = user._id;
+        const poll = await findPollById(pollId);
+        if (!poll) {
+            throw {
+                statusCode: 404,
+                message: "Poll not found"
+            }
+        }
+        console.log(poll?.creatorId._id.toString(), userId.toString(), user);
+        if (poll.creatorId._id.toString() !== userId.toString()) {
+            throw {
+                statusCode: 401,
+                message: "Unauthorized"
+            }
+        }
+        const deletedPoll = await deletePollService(pollId);
+        return deletedPoll;
+    }
+
+    catch(err){
+        throw err;
+    }
+}

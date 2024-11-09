@@ -1,8 +1,13 @@
-import { createPollService, getAllCreatedPollsService, getPollDataService } from "../services/poll.service.js";
+import {
+  createPollService,
+  deletePollService,
+  getAllCreatedPollsService,
+  getPollDataService,
+} from "../services/poll.service.js";
 
 export async function createPollController(req, res) {
   try {
-    const {title, description, options} = req.body;
+    const { title, description, options } = req.body;
     const user = req.user;
     const poll = await createPollService(title, description, options, user._id);
     res.status(201).json({
@@ -10,7 +15,6 @@ export async function createPollController(req, res) {
       message: "Poll created successfully",
       data: poll,
     });
-
   } catch (err) {
     if (err.statusCode) {
       res.status(err.statusCode).json({
@@ -26,7 +30,6 @@ export async function createPollController(req, res) {
   }
 }
 
-
 export async function getPollDataController(req, res) {
   try {
     const pollId = req.params.pollId;
@@ -36,8 +39,7 @@ export async function getPollDataController(req, res) {
       message: "Poll data fetched successfully",
       data: poll,
     });
-  }
-  catch(err) {
+  } catch (err) {
     if (err.statusCode) {
       res.status(err.statusCode).json({
         success: false,
@@ -61,8 +63,33 @@ export async function getAllCreatedPollsController(req, res) {
       message: "Polls fetched successfully",
       data: polls,
     });
+  } catch (err) {
+    console.log(err);
+    if (err.statusCode) {
+      res.status(err.statusCode).json({
+        success: false,
+        message: err.message,
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    }
   }
-  catch(err) {
+}
+
+export async function deletePollController(req, res) {
+  try {
+    const reqPollId = req.params.pollId;
+    const deletedPoll = await deletePollService(reqPollId, req.user);
+    res.json({
+      success : true,
+      message : "Poll deleted successfully.",
+      data : deletedPoll
+    })  
+  } 
+  catch (err) {
     console.log(err);
     if (err.statusCode) {
       res.status(err.statusCode).json({
