@@ -59,7 +59,44 @@ pollRouter.get("/test", (req, res) => {
  * 
  */
 pollRouter.post("/create", validator(pollDataSchema), verifyToken, createPollController);
+
+/**
+ * @swagger
+ * /poll/data/{pollId}:
+ *   get:
+ *     summary: Get poll data
+ *     tags: [Poll]
+ *     parameters:
+ *       - in: path
+ *         name: pollId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Poll ID
+ *     responses:
+ *       200:
+ *         description: Poll data fetched successfully
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal server error
+ */
 pollRouter.get("/data/:pollId", verifyToken, getPollDataController);
+
+/**
+ * @swagger
+ * /poll/created:
+ *   get:
+ *     summary: Get all created polls
+ *     tags: [Poll]
+ *     responses:
+ *       200:
+ *         description: All created polls fetched successfully
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal server error
+ */
 pollRouter.get("/created", verifyToken, getAllCreatedPollsController);
 
 export default pollRouter;

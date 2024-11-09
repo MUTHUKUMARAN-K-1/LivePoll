@@ -2,13 +2,12 @@
 import React, { useState } from "react";
 import { FaTrashAlt, FaUserEdit } from "react-icons/fa";
 
-function PollTableRow({ poll, index }) {
+function PollTableRow({ poll, index, refetch }) {
   const [showEditForm, setShowEditForm] = useState(false);
 
   const handleDelete = () => {
     const sure = window.confirm("Are you sure you want to delete this poll?");
     if (sure) {
-      // Call the delete poll function here
       console.log(`Poll with ID: ${poll._id} has been deleted.`);
     }
   };
@@ -26,7 +25,6 @@ function PollTableRow({ poll, index }) {
         <td className="text-gray-400 whitespace-normal break-words max-w-xs">
           {poll.description}
         </td>
-        <td className="text-white">{poll.totalVotes}</td>
         <td>
           {poll.published ? (
             <span className="badge badge-success text-white">Published</span>
@@ -36,9 +34,6 @@ function PollTableRow({ poll, index }) {
         </td>
         <td>
           <div className="flex md:flex-row flex-col gap-2 flex-nowrap">
-            <button onClick={() => setShowEditForm(true)} className="btn btn-sm btn-info flex items-center">
-              <FaUserEdit className="mr-1" /> Edit
-            </button>
             <button onClick={handleDelete} className="btn btn-sm btn-error flex items-center">
               <FaTrashAlt className="mr-1" /> Delete
             </button>
