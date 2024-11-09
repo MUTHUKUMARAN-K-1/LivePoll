@@ -1,4 +1,4 @@
-import { createPollService } from "../services/poll.service.js";
+import { createPollService, getPollDataService } from "../services/poll.service.js";
 
 export async function createPollController(req, res) {
   try {
@@ -12,6 +12,32 @@ export async function createPollController(req, res) {
     });
 
   } catch (err) {
+    if (err.statusCode) {
+      res.status(err.statusCode).json({
+        success: false,
+        message: err.message,
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    }
+  }
+}
+
+
+export async function getPollDataController(req, res) {
+  try {
+    const pollId = req.params.pollId;
+    const poll = await getPollDataService(pollId);
+    res.status(200).json({
+      success: true,
+      message: "Poll data fetched successfully",
+      data: poll,
+    });
+  }
+  catch(err) {
     if (err.statusCode) {
       res.status(err.statusCode).json({
         success: false,

@@ -1,6 +1,6 @@
 import express from "express";
 import { verifyToken } from "../../middlwares/verifyToken.js";
-import { createPollController } from "../../controllers/poll.controller.js";
+import { createPollController, getPollDataController } from "../../controllers/poll.controller.js";
 import pollDataSchema from "../../validations/pollDataValidation.js";
 import validator from "../../validations/validator.js";
 const pollRouter = express.Router();
@@ -59,5 +59,7 @@ pollRouter.get("/test", (req, res) => {
  * 
  */
 pollRouter.post("/create", validator(pollDataSchema), verifyToken, createPollController);
+
+pollRouter.get("/:pollId", verifyToken, getPollDataController);
 
 export default pollRouter;

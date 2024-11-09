@@ -9,3 +9,13 @@ export async function createPollByData(data) {
         throw err;
     }
 }
+
+export async function findPollById(id) {
+    try {
+        const poll = await PollModel.findById(id).populate("creatorId");
+        return poll;
+    }
+    catch(err){
+        throw err;
+    }
+}
