@@ -19,3 +19,13 @@ export async function findPollById(id) {
         throw err;
     }
 }
+
+export async function findPollsByCreatorId(id) {
+    try {
+        const polls = await PollModel.find({creatorId : id});
+        return polls;
+    }
+    catch(err){
+        throw err;
+    }
+}

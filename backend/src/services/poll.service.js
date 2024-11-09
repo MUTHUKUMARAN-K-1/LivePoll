@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { createPollByData, findPollById } from "../repositories/poll.repo.js";
+import { createPollByData, findPollById, findPollsByCreatorId } from "../repositories/poll.repo.js";
 
 export async function createPollService(title, description, options, userId) {
     try {
@@ -34,6 +34,16 @@ export async function getPollDataService(pollId) {
         const {creatorId, ...pollData} = poll._doc;
         const {username, _id, ...creatorData} = creatorId._doc;
         return {pollData, creatorData : {username, _id}};
+    }
+    catch(err){
+        throw err;
+    }
+}
+
+export async function getAllCreatedPollsService(id) {
+    try {
+        const polls = await findPollsByCreatorId(id);
+        return polls;
     }
     catch(err){
         throw err;
