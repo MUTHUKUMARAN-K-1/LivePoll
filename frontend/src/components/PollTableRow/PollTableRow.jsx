@@ -1,29 +1,16 @@
-import React, { useState } from "react";
-import { FaTrashAlt, FaUserEdit } from "react-icons/fa";
-import {useMutation} from "react-query"
-import deletePollService from "../../services/deletePollService";
-import { toast } from "react-toastify";
+import React, { } from "react";
+import { FaTrashAlt} from "react-icons/fa";
+import useDeletePoll from "../../hooks/usedeletePoll";
+import { useNavigate } from "react-router-dom";
 
 function PollTableRow({ poll, index, refetch }) {
   
+  const navigator = useNavigate();
+  const handleDelete = useDeletePoll(poll._id, refetch);
 
-  const mutation = useMutation(deletePollService, {
-    onSuccess : (data) => {
-      console.log(data);
-      refetch();
-      toast.success(data?.message);
-    },
-    onError : (error) => {
-      toast.error("An unexpected error occurred");
-      console.log(error);
-    }
-  })
-
-  const handleDelete = () => {
-    const sure = window.confirm("Are you sure you want to delete this poll?");
-    if (!sure) return;
-    mutation.mutate(poll._id);
-  };
+  const handleViewOnClick = () => {
+    navigator(`/view/${poll._id}`);
+  }
 
   return (
     <>
@@ -42,7 +29,10 @@ function PollTableRow({ poll, index, refetch }) {
           )}
         </td>
         <td>
-          <div className="flex md:flex-row flex-col gap-2 flex-nowrap">
+          <div className="flex md:flex-row flex-wrap flex-col gap-2">
+          <button onClick={handleViewOnClick} className="btn btn-sm btn-primary flex items-center">
+              <FaTrashAlt className="mr-1" /> View
+            </button>
             <button onClick={handleDelete} className="btn btn-sm btn-error flex items-center">
               <FaTrashAlt className="mr-1" /> Delete
             </button>

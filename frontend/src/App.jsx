@@ -28,7 +28,7 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="bookmark" element={<Bookmark />} />
-            <Route path="/voting/:pollId" element={<VotingPage />} />
+            <Route path="/view/:pollId" element={<VotingPage />} />
             <Route path="/create" element={<CreatePollForm />} />
           </Route>
         </Routes>

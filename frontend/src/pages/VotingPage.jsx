@@ -2,11 +2,22 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale } from "chart.js";
+import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
+import getPollData from "../services/getPollData";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale);
 
 function VotingPage() {
-  // Dummy poll data
+
+  const { pollId } = useParams();
+
+  const { data: poll, isLoading, isError } = useQuery(["poll", pollId], () => getPollData(pollId), {
+    cacheTime : 10*100*60, // 10 minutes
+    staleTime : 20*100*60, // 20 minutes
+  });
+  console.log(poll);
+  
   const pollData = {
     title: "What's your favorite programming language?",
     options: [
