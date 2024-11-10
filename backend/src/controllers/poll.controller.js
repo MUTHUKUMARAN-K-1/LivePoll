@@ -82,7 +82,8 @@ export async function getAllCreatedPollsController(req, res) {
 export async function deletePollController(req, res) {
   try {
     const reqPollId = req.params.pollId;
-    const deletedPoll = await deletePollService(reqPollId, req.user);
+    const reqUser = req.user;
+    const deletedPoll = await deletePollService(reqPollId, reqUser);
     res.json({
       success : true,
       message : "Poll deleted successfully.",

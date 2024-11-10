@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { createPollByData, findPollById, findPollsByCreatorId } from "../repositories/poll.repo.js";
+import { createPollByData, deletePollById, findPollById, findPollsByCreatorId } from "../repositories/poll.repo.js";
 
 export async function createPollService(title, description, options, userId) {
     try {
@@ -67,7 +67,7 @@ export async function deletePollService(pollId, user) {
                 message: "Unauthorized"
             }
         }
-        const deletedPoll = await deletePollService(pollId);
+        const deletedPoll = await deletePollById(pollId);
         return deletedPoll;
     }
 

@@ -99,6 +99,27 @@ pollRouter.get("/data/:pollId", verifyToken, getPollDataController);
  */
 pollRouter.get("/created", verifyToken, getAllCreatedPollsController);
 
+/**
+ * @swagger
+ * /poll/delete/{pollId}:
+ *   delete:
+ *     summary: Delete poll
+ *     tags: [Poll]
+ *     parameters:
+ *       - in: path
+ *         name: pollId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Poll ID
+ *     responses:
+ *       200:
+ *         description: Poll deleted successfully
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal server error
+ * */
 pollRouter.delete("/delete/:pollId", verifyToken, deletePollController);
 
 export default pollRouter;
