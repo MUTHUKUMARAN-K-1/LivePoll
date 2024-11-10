@@ -1,24 +1,33 @@
-// PollTableRow.js
 import React, { useState } from "react";
 import { FaTrashAlt, FaUserEdit } from "react-icons/fa";
+import {useMutation} from "react-query"
+import deletePollService from "../../services/deletePollService";
+import { toast } from "react-toastify";
 
 function PollTableRow({ poll, index, refetch }) {
-  const [showEditForm, setShowEditForm] = useState(false);
+  
+
+  const mutation = useMutation(deletePollService, {
+    onSuccess : (data) => {
+      console.log(data);
+      refetch();
+      toast.success(data?.message);
+    },
+    onError : (error) => {
+      toast.error("An unexpected error occurred");
+      console.log(error);
+    }
+  })
 
   const handleDelete = () => {
     const sure = window.confirm("Are you sure you want to delete this poll?");
-    if (sure) {
-      console.log(`Poll with ID: ${poll._id} has been deleted.`);
-    }
+    if (!sure) return;
+    mutation.mutate(poll._id);
   };
 
   return (
     <>
-      {showEditForm && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
-          {/* Poll Edit Form Component would go here */}
-        </div>
-      )}
+     
       <tr>
         <th>{index + 1}</th>
         <td className="text-white">{poll.title}</td>
