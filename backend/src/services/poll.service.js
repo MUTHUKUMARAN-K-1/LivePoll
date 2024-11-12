@@ -12,6 +12,7 @@ import {
 } from "../repositories/vote.repo.js";
 import {
   addPollIdToBookmark,
+  getUserBookmarkedPolls,
   removePollIdFromBookmark,
 } from "../repositories/user.repo.js";
 
@@ -136,6 +137,16 @@ export async function addToBookMarkService(pollId, user) {
       updatedData,
       message,
     };
+  } catch (err) {
+    throw err;
+  }
+}
+
+
+export async function getBookmarkPollService(userId) {
+  try {
+    const data = await getUserBookmarkedPolls(userId);
+    return data;
   } catch (err) {
     throw err;
   }

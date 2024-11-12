@@ -61,3 +61,12 @@ export async function removePollIdFromBookmark(userId, pollId) {
         throw err;
     }
 }
+
+export async function getUserBookmarkedPolls(userId) {
+  try {
+    const user = await UserModel.findById(userId).populate("bookmarks");
+    return user.bookmarks;
+  } catch (err) {
+    throw err;
+  }
+}
