@@ -1,5 +1,6 @@
 import {
   createPollService,
+  createVoteService,
   deletePollService,
   getAllCreatedPollsService,
   getPollDataService,
@@ -88,6 +89,37 @@ export async function deletePollController(req, res) {
       success : true,
       message : "Poll deleted successfully.",
       data : deletedPoll
+    })  
+  } 
+  catch (err) {
+    console.log(err);
+    if (err.statusCode) {
+      res.status(err.statusCode).json({
+        success: false,
+        message: err.message,
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    }
+  }
+}
+
+
+export const createVoteController = async (req, res) => {
+  try {
+    const reqPollId = req.body.pollId;
+    const reqOptionId = req.body.optionId;
+    const reqUserId = req.user._id;
+
+    const vote = await createVoteService(reqPollId, reqUserId, reqOptionId);
+  
+    res.json({
+      success : true,
+      message : "Vote created successfully.",
+      data : vote
     })  
   } 
   catch (err) {

@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
-import { createPollByData, deletePollById, findPollById, findPollsByCreatorId } from "../repositories/poll.repo.js";
+import { createPollByData, deletePollById, findPollById, findPollsByCreatorId, updatePollVoteCount } from "../repositories/poll.repo.js";
+import { createVote, findVoteByPollIdAndUserId } from "../repositories/vote.repo.js";
 
 export async function createPollService(title, description, options, userId) {
     try {
         const optionsData = options.map(option => ({
             name: option,
-            _id : new mongoose.Types.ObjectId()
+            _id : new mongoose.Types.ObjectId(),
+            voteCount : 0
         }));
 
         const data = {
@@ -71,6 +73,35 @@ export async function deletePollService(pollId, user) {
         return deletedPoll;
     }
 
+    catch(err){
+        throw err;
+    }
+}
+
+export async function createVoteService(pollId, userId, optionId) {
+    try {
+        // vote already voted
+        const vote = await findVoteByPollIdAndUserId(pollId, userId);
+        if (vote) {
+            throw {
+                statusCode: 400,
+                message: "You have already voted on this poll"
+            }
+        }
+        console.log(pollId, userId, optionId);
+        const poll = await findPollById(pollId);
+        if (!poll) {
+            throw {
+                statusCode: 404,
+                message: "Poll not found"
+            }
+        }
+        const updatedPollData = await updatePollVoteCount(pollId, optionId);
+        const createdVote = await createVote(pollId, userId, optionId);
+        console.log(updatedPollData)
+        return createVote;
+        
+    }
     catch(err){
         throw err;
     }

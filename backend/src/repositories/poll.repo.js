@@ -1,4 +1,6 @@
 import PollModel from "../models/poll.model.js";
+import mongoose from "mongoose";
+const {ObjectId} = mongoose.Types;
 
 export async function createPollByData(data) {
     try {
@@ -34,6 +36,23 @@ export async function deletePollById(id) {
     try {
         const poll = await PollModel.findByIdAndDelete(id);
         return poll;
+    }
+    catch(err){
+        throw err;
+    }
+}
+
+export async function updatePollVoteCount(pollId, optionId) {
+    try {
+        const pollIdObejct = new ObjectId(pollId);
+        const optionIdObject  = new ObjectId(optionId);
+        console.log(pollId, optionId, pollIdObejct, optionIdObject);
+        const result = await PollModel.updateOne(
+            { _id: pollIdObejct, "options._id": optionIdObject },
+            { $inc: { "options.$.voteCount": 1 } }
+          );
+
+        return result;
     }
     catch(err){
         throw err;

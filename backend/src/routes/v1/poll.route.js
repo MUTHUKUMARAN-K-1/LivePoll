@@ -1,8 +1,9 @@
 import express from "express";
 import { verifyToken } from "../../middlwares/verifyToken.js";
-import { createPollController, deletePollController, getAllCreatedPollsController, getPollDataController } from "../../controllers/poll.controller.js";
+import { createPollController, createVoteController, deletePollController, getAllCreatedPollsController, getPollDataController } from "../../controllers/poll.controller.js";
 import pollDataSchema from "../../validations/pollDataValidation.js";
 import validator from "../../validations/validator.js";
+import voteSchema from "../../validations/voteValidation.js";
 const pollRouter = express.Router();
 
 /**
@@ -121,5 +122,7 @@ pollRouter.get("/created", verifyToken, getAllCreatedPollsController);
  *         description: Internal server error
  * */
 pollRouter.delete("/delete/:pollId", verifyToken, deletePollController);
+
+pollRouter.post("/vote", validator(voteSchema), verifyToken, createVoteController);
 
 export default pollRouter;
