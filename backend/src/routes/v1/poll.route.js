@@ -123,6 +123,38 @@ pollRouter.get("/created", verifyToken, getAllCreatedPollsController);
  * */
 pollRouter.delete("/delete/:pollId", verifyToken, deletePollController);
 
+/**
+ *  @swagger
+ * /poll/vote:
+ *   post:
+ *     summary: Create vote
+ *     tags: [Vote]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               pollId:
+ *                 type: string
+ *               optionId:
+ *                  type : string
+ *             required:
+ *               - pollId
+ *               - optionId
+ *     responses:
+ *       201: 
+ *         description: Vote created successfully
+ *       400:
+ *         description: Validation error
+ *       401:
+ *         description: Unauthorized
+ *       404: 
+ *          description: Poll not found
+ *       500:
+ *         description: Internal server error
+ */
 pollRouter.post("/vote", validator(voteSchema), verifyToken, createVoteController);
 
 export default pollRouter;
