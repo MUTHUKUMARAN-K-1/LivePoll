@@ -1,4 +1,5 @@
 import {
+  addToBookMarkService,
   createPollService,
   createVoteService,
   deletePollService,
@@ -86,12 +87,11 @@ export async function deletePollController(req, res) {
     const reqUser = req.user;
     const deletedPoll = await deletePollService(reqPollId, reqUser);
     res.json({
-      success : true,
-      message : "Poll deleted successfully.",
-      data : deletedPoll
-    })  
-  } 
-  catch (err) {
+      success: true,
+      message: "Poll deleted successfully.",
+      data: deletedPoll,
+    });
+  } catch (err) {
     console.log(err);
     if (err.statusCode) {
       res.status(err.statusCode).json({
@@ -107,7 +107,6 @@ export async function deletePollController(req, res) {
   }
 }
 
-
 export const createVoteController = async (req, res) => {
   try {
     const reqPollId = req.body.pollId;
@@ -115,13 +114,39 @@ export const createVoteController = async (req, res) => {
     const reqUserId = req.user._id;
 
     const vote = await createVoteService(reqPollId, reqUserId, reqOptionId);
-  
+
     res.json({
-      success : true,
-      message : "Vote created successfully.",
-      data : vote
-    })  
-  } 
+      success: true,
+      message: "Vote created successfully.",
+      data: vote,
+    });
+  } catch (err) {
+    console.log(err);
+    if (err.statusCode) {
+      res.status(err.statusCode).json({
+        success: false,
+        message: err.message,
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    }
+  }
+};
+
+export const addToBookmarkController = async (req, res) => {
+  try{
+    const reqPollId = req.params.pollId;
+    const reqUser = req.user;
+    const {updatedData, message} = await addToBookMarkService(reqPollId, reqUser);
+    res.json({
+      success: true,
+      message: message,
+      data : updatedData
+    })
+  }
   catch (err) {
     console.log(err);
     if (err.statusCode) {

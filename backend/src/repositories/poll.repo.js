@@ -18,7 +18,10 @@ export async function findPollById(id) {
         return poll;
     }
     catch(err){
-        throw err;
+        throw {
+            statusCode : 404,
+            message : "Poll dont exits."
+        };
     }
 }
 

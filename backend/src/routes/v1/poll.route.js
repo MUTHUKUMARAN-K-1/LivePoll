@@ -1,6 +1,6 @@
 import express from "express";
 import { verifyToken } from "../../middlwares/verifyToken.js";
-import { createPollController, createVoteController, deletePollController, getAllCreatedPollsController, getPollDataController } from "../../controllers/poll.controller.js";
+import { addToBookmarkController, createPollController, createVoteController, deletePollController, getAllCreatedPollsController, getPollDataController } from "../../controllers/poll.controller.js";
 import pollDataSchema from "../../validations/pollDataValidation.js";
 import validator from "../../validations/validator.js";
 import voteSchema from "../../validations/voteValidation.js";
@@ -156,5 +156,28 @@ pollRouter.delete("/delete/:pollId", verifyToken, deletePollController);
  *         description: Internal server error
  */
 pollRouter.post("/vote", validator(voteSchema), verifyToken, createVoteController);
+
+/**
+ * @swagger
+ * /poll/bookmark/{pollId}:
+ *   get:
+ *     summary: Add poll to bookmark
+ *     tags: [Bookmark]
+ *     parameters:
+ *       - in: path
+ *         name: pollId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Poll ID
+ *     responses:
+ *       200:
+ *         description: Poll added to bookmark successfully
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal server error
+ * */
+pollRouter.get("/bookmark/:pollId", verifyToken, addToBookmarkController);
 
 export default pollRouter;

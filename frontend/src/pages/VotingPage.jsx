@@ -36,7 +36,7 @@ function VotingPage() {
     mutation.mutate({ pollId, optionId: id });
   }
 
-
+  
   const chartData = {
     labels: poll?.data?.pollData?.options.map(option => option.name),
     datasets: [
