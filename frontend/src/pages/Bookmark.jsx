@@ -22,7 +22,7 @@ const dummyBookmarks = [
 function Bookmark() {
   return (
     <div className="p-6 bg-base-200 h-screen">
-      <h1 className="text-4xl font-bold text-white mb-6">Bookmarked Polls</h1>
+      <h1 className="md:text-4xl text-xl font-bold text-white mb-6">Bookmarked Polls</h1>
       <div className="overflow-x-auto">
         <table className="table w-full bg-base-100">
           <thead>
@@ -37,12 +37,12 @@ function Bookmark() {
             {dummyBookmarks.map((bookmark, index) => (
               <tr key={bookmark.id}>
                 <th>{index + 1}</th>
-                <td className="text-white">{bookmark.title}</td>
-                <td className="text-gray-400 whitespace-normal break-words max-w-xs">
+                <td className="text-white text-sm md:text-base">{bookmark.title}</td>
+                <td className="text-gray-400 whitespace-normal break-words max-w-xs text-xs md:text-base">
                   {bookmark.description}
                 </td>
                 <td>
-                  <button className="btn btn-primary">
+                  <button className="btn btn-primary text-sm md:text-base">
                     View Poll
                   </button>
                 </td>
