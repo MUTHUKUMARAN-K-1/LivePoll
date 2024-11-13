@@ -27,7 +27,7 @@ function VotingPage() {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const s = io("http://localhost:3000");
+    const s = io("https://livepoll-anjx.onrender.com");
     setSocket(s);
   
     s.on("connect", () => {
