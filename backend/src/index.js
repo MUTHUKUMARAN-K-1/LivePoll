@@ -19,7 +19,7 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 const io = new Server(httpServer, {
     cors: {
-        origin : "*", // Allow requests from any origin
+        origin: CLIENT_URL,
         credentials: true
     }
 })
