@@ -29,6 +29,9 @@ function ProfileImage({userData}) {
             Profile
             <span className="badge">New</span>
           </Link>
+          <Link to={"/bookmark"} className="justify-between" >
+            Bookmarks
+          </Link>
         </li>
         <li><a onClick={handleLogout}>Logout</a></li>
       </ul>
