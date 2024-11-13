@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -15,30 +15,73 @@ import { FaBookmark } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { makeChartDataObjFromPollData } from "../utils/util";
 import useBookmark from "../hooks/useBookmark";
+import { io } from "socket.io-client";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale);
 
 function VotingPage() {
   const { pollId } = useParams();
-  const [seletedOption, setSeletedOption] = useState(null);
-  const {handleBookmark} = useBookmark()
+  const [selectedOption, setSelectedOption] = useState(null);
+  const { handleBookmark } = useBookmark();
+  const [poll, setPoll] = useState(null);
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    const s = io("http://localhost:3000");
+    setSocket(s);
+  
+    s.on("connect", () => {
+      console.log("Connected to the server");
+      s.emit("joinPoll", pollId);
+    });
+  
+    return () => {
+      s.disconnect();
+    };
+  }, [pollId]);
+  
 
   const {
-    data: poll,
+    data,
     isLoading,
     isError,
     refetch,
   } = useQuery(["poll", pollId], () => getPollData(pollId), {
-    cacheTime: 10 * 100 * 60, // 10 minutes
-    staleTime: 20 * 100 * 60, // 20 minutes
+    cacheTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 20 * 60 * 1000, // 20 minutes
+    onSuccess: (data) => {
+      setPoll(data);
+    },
   });
+
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("pollDataUpdated", (data) => {
+        console.log("Received updated poll data:", data);
+        setPoll(data);
+      });
+
+      socket.on("error", (error) => {
+        console.error("Socket error:", error.message);
+      });
+
+      return () => {
+        socket.off("pollDataUpdated");
+        socket.off("error");
+      };
+    }
+  }, [socket]); 
 
   const mutation = useMutation(createVoteService, {
     onSuccess: (data) => {
-      toast.success("Vote given successfully");
+      toast.success("Vote submitted successfully");
+      if (socket) {
+        socket.emit("vote", { pollId, success: data?.success });
+      }
     },
     onError: (error) => {
-      console.log(error);
+      console.error(error);
       toast.error(
         error?.response?.data?.message || "An unexpected error occurred"
       );
@@ -46,6 +89,7 @@ function VotingPage() {
   });
 
   const handleOptionSelect = (id) => {
+    setSelectedOption(id);
     mutation.mutate({ pollId, optionId: id });
   };
 
@@ -60,6 +104,9 @@ function VotingPage() {
       </div>
     );
   }
+
+  const chartData = makeChartDataObjFromPollData(poll);
+
 
   return (
     <div className="bg-base-200 min-h-screen p-6 text-white flex flex-col items-center">
@@ -99,9 +146,9 @@ function VotingPage() {
             onClick={() => handleOptionSelect(option._id)}
             key={option._id}
             className={`md:p-4 p-2 ${
-              seletedOption == option._id ? "bg-blue-500" : "bg-base-100"
+              selectedOption == option._id ? "bg-blue-500" : "bg-base-100"
             } rounded-lg shadow-md flex items-center justify-center cursor-pointer ${
-              seletedOption == option._id ? "outline" : "hover:bg-base-300"
+              selectedOption == option._id ? "outline" : "hover:bg-base-300"
             } transition`}
           >
             <span className="text-lg">{option.name}</span>

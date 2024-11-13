@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ErrorFallback = ({ onRetry }) => {
   return (
@@ -14,6 +15,9 @@ const ErrorFallback = ({ onRetry }) => {
         >
           Retry
         </button>
+        <Link to="/" className="btn btn-ghost w-full">
+          Go Home
+        </Link>
       </div>
     </div>
   );

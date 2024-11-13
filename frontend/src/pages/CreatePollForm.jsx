@@ -4,12 +4,14 @@ import { FaPlus, FaTrashAlt } from "react-icons/fa";
 import { useMutation } from "react-query";
 import createPollService from "../services/createPollService";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function CreatePollForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [options, setOptions] = useState([]);
   const [optionInput, setOptionInput] = useState("");
+  const navigate = useNavigate();
 
   const handleAddOption = () => {
     if (optionInput.trim() == "") {
@@ -31,6 +33,7 @@ function CreatePollForm() {
       const message = data?.message || "Poll created successfully";
       toast.success(message);
       handleClearPoll();
+      navigate(`/view/${data?.data?._id}`);
     },
     onError: (error) => {
       console.log(error);

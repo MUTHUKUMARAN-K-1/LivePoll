@@ -8,6 +8,7 @@ import useLogout from "../hooks/useLogout";
 import { useQuery } from "react-query";
 import getUserPollData from "../services/getUserPollData";
 import ErrorFallback from "../components/Errors/ErrorFallback";
+import { formatDataByDate } from "../utils/util";
 
 function Dashboard() {
   const navigator = useNavigate();
@@ -23,7 +24,6 @@ function Dashboard() {
     }
   );
 
-  console.log(data);
 
   const pollData = [
     {
@@ -108,7 +108,7 @@ function Dashboard() {
               </thead>
 
               <tbody>
-                {data.map((poll, index) => (
+                {formatDataByDate(data)?.map((poll, index) => (
                   <PollTableRow key={poll._id} refetch={refetch} poll={poll} index={index} /> // Replace with actual path
                 ))}
               </tbody>

@@ -20,3 +20,8 @@ export const makeChartDataObjFromPollData = (poll) => {
         ],
       };
 }
+
+export const formatDataByDate = (data) => {
+  const fromatedData = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  return fromatedData;
+}

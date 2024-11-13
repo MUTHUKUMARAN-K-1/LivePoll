@@ -65,7 +65,7 @@ export async function updatePollVoteCount(pollId, optionId) {
 export async function findPolls(page, limit) {
     try{
         const skip = (page - 1) * limit;
-        const polls = await PollModel.find().skip(skip).limit(limit).populate("creatorId");
+        const polls = await PollModel.find().sort({createdAt : -1}).skip(skip).limit(limit).populate("creatorId");
         return polls;
     }
     catch(err){

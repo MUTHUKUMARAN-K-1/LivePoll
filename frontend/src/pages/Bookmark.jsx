@@ -5,6 +5,7 @@ import { useQuery, useQueryClient } from "react-query";
 import ErrorFallback from "../components/Errors/ErrorFallback";
 import useBookmark from "../hooks/useBookmark";
 import { useNavigate } from "react-router-dom";
+import { formatDataByDate } from "../utils/util";
 
 function Bookmark() {
   const { handleBookmark } = useBookmark();
@@ -34,6 +35,7 @@ function Bookmark() {
     });
     await handleBookmark(bookmarkId);
   };
+  console.log(data);
 
   return (
     <div className="p-6 bg-base-200 h-screen">
@@ -58,7 +60,7 @@ function Bookmark() {
               </tr>
             </thead>
             <tbody>
-              {data?.data?.map((bookmark, index) => (
+              {formatDataByDate(data.data).map((bookmark, index) => (
                 <tr key={bookmark._id}>
                   <th>{index + 1}</th>
                   <td className="text-white text-sm md:text-base">
