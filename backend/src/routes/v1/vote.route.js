@@ -1,6 +1,6 @@
 import express from "express";
 import { verifyToken } from "../../middlwares/verifyToken.js";
-import { voteTestController } from "../../controllers/vote.controller.js";
+import { getPollVoteController, voteTestController } from "../../controllers/vote.controller.js";
 const voteRouter = express.Router();
 
 /**
@@ -14,6 +14,6 @@ const voteRouter = express.Router();
  *         description: Success
  */
 voteRouter.get("/test", voteTestController)
-// voteRouter.get("/voted/:pollId", verifyToken, getVotedDataController);
+voteRouter.get("/voted/:pollId", verifyToken, getPollVoteController);
 
 export default voteRouter;
