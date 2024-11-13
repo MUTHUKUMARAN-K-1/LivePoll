@@ -20,18 +20,22 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 const io = new Server(httpServer, {
     cors: {
         origin: CLIENT_URL,
-        methods: ["GET", "POST", "PUT", "DELETE"]
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        credentials: true
     }
 })
+
 
 handlePollSocket(io);
 
 
 app.use(cookieParser());
-app.use(cors({
-    origin: CLIENT_URL,
-    credentials: true
-}))
+app.use(cors(
+    {
+        origin: CLIENT_URL,
+        credentials: true,
+    }
+))
 app.use(express.json())
 app.get("/ping", (_req, res) => {
     res.json({ message: "pong" })

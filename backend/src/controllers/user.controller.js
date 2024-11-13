@@ -30,8 +30,10 @@ export async function signinController(req, res) {
     const { email, password } = req.body;
     const { token, userData } = await signinService(email, password);
     res.cookie("livepoll-access-token", token, {
-      httpOnly: true,
-      maxAge: 10 * 24 * 60 * 60 * 1000, // 10 days
+      httpOnly: true,    
+      secure: true,      
+      sameSite: "None", 
+      path: "/"
     }).status(200).json({
         success : true,
         message : "User signedin successfully.",
