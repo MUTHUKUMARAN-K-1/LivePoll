@@ -111,3 +111,7 @@ A basic diagram for this system would include:
 3. **Database (MongoDB)**: Stores collections for users, polls, votes, and bookmarks.
 4. **Socket.io/WebSocket**: Handles real-time updates from the server to the clients as votes come in.
 
+## To go from deployed to local:
+- change the backend .env url to `http://localhost:3000`
+- chnage the axios base url to `http://localhost:3000/api/v1`
+- change the io url in the vottingPage to `http://localhost:3000`

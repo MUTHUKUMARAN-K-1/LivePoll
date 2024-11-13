@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import { makeChartDataObjFromPollData } from "../utils/util";
 import useBookmark from "../hooks/useBookmark";
 import { io } from "socket.io-client";
+import { getPollSelectedOptionData } from "../services/getPollSelectedOptionData";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale);
 
@@ -28,6 +29,7 @@ function VotingPage() {
 
   useEffect(() => {
     const s = io("https://livepoll-anjx.onrender.com");
+    // const s = io("http://localhost:3000");
     setSocket(s);
   
     s.on("connect", () => {
@@ -39,6 +41,8 @@ function VotingPage() {
       s.disconnect();
     };
   }, [pollId]);
+
+  
   
 
   const {
@@ -51,6 +55,14 @@ function VotingPage() {
     staleTime: 20 * 60 * 1000, // 20 minutes
     onSuccess: (data) => {
       setPoll(data);
+    },
+  });
+
+  useQuery(["selectedOption", pollId], () => getPollSelectedOptionData(pollId), {
+    cacheTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 20 * 60 * 1000, 
+    onSuccess: (data) => {
+      setSelectedOption(data?.data?.optionId || null);
     },
   });
 
@@ -89,7 +101,9 @@ function VotingPage() {
   });
 
   const handleOptionSelect = (id) => {
-    setSelectedOption(id);
+    if (!selectedOption){
+      setSelectedOption(id);
+    }
     mutation.mutate({ pollId, optionId: id });
   };
 
