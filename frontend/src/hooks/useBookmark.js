@@ -17,7 +17,7 @@ function useBookmark() {
         },
       })
     
-      const handleBookmark = (pollId) => {
+      const handleBookmark = async (pollId) => {
         BookmarkMutation.mutate(pollId);
       }
 
