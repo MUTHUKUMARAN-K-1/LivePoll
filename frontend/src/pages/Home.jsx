@@ -6,7 +6,6 @@ function Home() {
 
   const navigator = useNavigate();
 
-
   return (
     <div className="flex bg-base-200 min-h-screen flex-col items-center text-white p-8">
       <h1 className="text-4xl mt-2 md:text-5xl font-bold mb-6 text-center flex flex-col gap-2 md:block">Welcome to <span className='bg-slate-800 px-4 rounded-md relative'>LivePoll</span></h1>
