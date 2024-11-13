@@ -33,6 +33,7 @@ export async function signinController(req, res) {
       httpOnly: true,    
       secure: true,      
       sameSite: "None", 
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000 * 365), // 1 year
       path: "/"
     }).status(200).json({
         success : true,

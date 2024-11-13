@@ -19,8 +19,7 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 const io = new Server(httpServer, {
     cors: {
-        origin: CLIENT_URL,
-        methods: ["GET", "POST", "PUT", "DELETE"],
+        origin : "*", // Allow requests from any origin
         credentials: true
     }
 })
