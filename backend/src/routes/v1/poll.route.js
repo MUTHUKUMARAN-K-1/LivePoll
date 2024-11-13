@@ -1,6 +1,6 @@
 import express from "express";
 import { verifyToken } from "../../middlwares/verifyToken.js";
-import { addToBookmarkController, createPollController, createVoteController, deletePollController, getAllCreatedPollsController, getBookmarkPollController, getPollDataController } from "../../controllers/poll.controller.js";
+import { addToBookmarkController, createPollController, createVoteController, deletePollController, getAllCreatedPollsController, getAllPolls, getBookmarkPollController, getPollDataController } from "../../controllers/poll.controller.js";
 import pollDataSchema from "../../validations/pollDataValidation.js";
 import validator from "../../validations/validator.js";
 import voteSchema from "../../validations/voteValidation.js";
@@ -195,5 +195,34 @@ pollRouter.get("/bookmark/:pollId", verifyToken, addToBookmarkController);
  *         description: Internal server error
  */
 pollRouter.get("/bookmarks", verifyToken, getBookmarkPollController);
+
+/**
+ * @swagger
+ * /poll/all?page={page}&limit={limit}:
+ *   get:
+ *     summary: Get all polls
+ *     tags: [Poll]
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Limit
+ *     responses:
+ *       200:
+ *         description: All polls fetched successfully
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal server error
+ */
+pollRouter.get("/all", getAllPolls)
 
 export default pollRouter;

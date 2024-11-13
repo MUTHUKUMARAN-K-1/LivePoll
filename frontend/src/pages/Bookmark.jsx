@@ -25,7 +25,6 @@ function Bookmark() {
     navigator(`/view/${pollId}`);
   };
 
-
   const handleRemoveBookmark = async (bookmarkId) => {
     queryClient.setQueryData(["bookmarks"], (oldData) => {
       return {
@@ -35,7 +34,7 @@ function Bookmark() {
     });
     await handleBookmark(bookmarkId);
   };
-  
+
   return (
     <div className="p-6 bg-base-200 h-screen">
       <h1 className="md:text-4xl text-xl font-bold text-white mb-6">

@@ -3,7 +3,9 @@ import {
   createPollByData,
   deletePollById,
   findPollById,
+  findPolls,
   findPollsByCreatorId,
+  getAllPollsCount,
   updatePollVoteCount,
 } from "../repositories/poll.repo.js";
 import {
@@ -133,8 +135,9 @@ export async function addToBookMarkService(pollId, user) {
       updatedData = await removePollIdFromBookmark(user._id, poll._id);
       message = "Removed from bookmark successfully.";
     }
+    const {password, ...userData} = updatedData._doc;
     return {
-      updatedData,
+      updatedData : userData,
       message,
     };
   } catch (err) {
@@ -148,6 +151,30 @@ export async function getBookmarkPollService(userId) {
     const data = await getUserBookmarkedPolls(userId);
     return data;
   } catch (err) {
+    throw err;
+  }
+}
+
+export async function getAllPollsService(page, limit) {
+  try {
+    const data = await findPolls(page, limit);
+    const filteredData = data.map((poll) => {
+      const { creatorId, ...pollData } = poll._doc;
+      const { username, _id, ...creatorData } = creatorId._doc;
+      const {options, ...rest} = pollData;
+      return {
+        ...rest,
+        creatorData: { username, _id }
+      };
+    });
+    const totalPollCount = await getAllPollsCount();
+    return {
+      polls: filteredData,
+      totalPollCount: totalPollCount,
+      totalPages: Math.ceil(totalPollCount / limit),
+    };
+  }
+  catch (err) {
     throw err;
   }
 }

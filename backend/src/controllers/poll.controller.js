@@ -4,6 +4,7 @@ import {
   createVoteService,
   deletePollService,
   getAllCreatedPollsService,
+  getAllPollsService,
   getBookmarkPollService,
   getPollDataService,
 } from "../services/poll.service.js";
@@ -171,6 +172,33 @@ export const getBookmarkPollController = async (req, res) => {
     res.json({
       success: true,
       message: "Bookmarked Polls fetched successfully",
+      data: data,
+    });
+  }
+  catch (err) {
+    console.log(err);
+    if (err.statusCode) {
+      res.status(err.statusCode).json({
+        success: false,
+        message: err.message,
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    }
+  }
+}
+
+export const getAllPolls = async (req, res) => {
+  try {
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 10;
+    const data = await getAllPollsService(page, limit);
+    res.json({
+      success: true,
+      message: "All Polls fetched successfully",
       data: data,
     });
   }

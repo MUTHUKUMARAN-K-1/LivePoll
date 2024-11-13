@@ -61,3 +61,24 @@ export async function updatePollVoteCount(pollId, optionId) {
         throw err;
     }
 }
+
+export async function findPolls(page, limit) {
+    try{
+        const skip = (page - 1) * limit;
+        const polls = await PollModel.find().skip(skip).limit(limit).populate("creatorId");
+        return polls;
+    }
+    catch(err){
+        throw err;
+    }
+}
+
+export async function getAllPollsCount(){
+    try{
+        const count = await PollModel.find().countDocuments();
+        return count;
+    }
+    catch(err){
+        throw err;
+    }
+}
