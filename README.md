@@ -161,3 +161,9 @@ API Communication: `Axios`
 - Open a browser and go to `http://localhost:5173` to access the application.
 
 ## Future Improvements
+- Add a search feature to the poll page.
+- Add like feature to the poll.
+- sorting polls using created date and popularity.
+- Updated user.
+- User avatar.
+- Multiple question poll.
